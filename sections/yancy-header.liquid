@@ -1,0 +1,109 @@
+<header class="yancy-header">
+  <nav class="yancy-nav">
+    <ul class="yancy-nav-links">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'link' -%}
+          <li {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.link | default: '#' }}">{{ block.settings.label }}</a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+    <button type="button" class="yancy-mobile-menu-toggle" data-yancy-menu-open aria-expanded="false" aria-controls="YancyMobileDrawer">
+      {{ section.settings.mobile_menu_label | default: 'Menu' }}
+    </button>
+
+    <a class="yancy-logo" href="{{ routes.root_url }}">{{ section.settings.logo_text | default: 'YANCY' }}</a>
+
+    <div class="yancy-nav-actions">
+      <a href="{{ routes.search_url }}">{{ section.settings.search_label | default: 'Search' }}</a>
+      <a href="{{ routes.account_url }}">{{ section.settings.account_label | default: 'Account' }}</a>
+      <a href="{{ routes.cart_url }}">
+        {{ section.settings.cart_label | default: 'Cart' }}{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}
+      </a>
+    </div>
+  </nav>
+</header>
+
+<div class="yancy-mobile-drawer" id="YancyMobileDrawer" data-open="false">
+  <button type="button" class="yancy-mobile-drawer-close" data-yancy-menu-close>Close</button>
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'link' -%}
+      <a href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+    {%- endif -%}
+  {%- endfor -%}
+  <a href="{{ routes.search_url }}">{{ section.settings.search_label | default: 'Search' }}</a>
+  <a href="{{ routes.account_url }}">{{ section.settings.account_label | default: 'Account' }}</a>
+  <a href="{{ routes.cart_url }}">{{ section.settings.cart_label | default: 'Cart' }}{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}</a>
+</div>
+
+<script src="{{ 'yancy-header.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Yancy: Header",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "YANCY"
+    },
+    {
+      "type": "text",
+      "id": "mobile_menu_label",
+      "label": "Mobile menu label",
+      "default": "Menu"
+    },
+    {
+      "type": "text",
+      "id": "search_label",
+      "label": "Search label",
+      "default": "Search"
+    },
+    {
+      "type": "text",
+      "id": "account_label",
+      "label": "Account label",
+      "default": "Account"
+    },
+    {
+      "type": "text",
+      "id": "cart_label",
+      "label": "Cart label",
+      "default": "Cart"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Nav link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Link"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "link", "settings": { "label": "Home", "link": "/" } },
+      { "type": "link", "settings": { "label": "Collection", "link": "shopify://collections/all" } },
+      { "type": "link", "settings": { "label": "Our Story", "link": "shopify://pages/our-story" } },
+      { "type": "link", "settings": { "label": "Shop", "link": "shopify://collections/all" } }
+    ]
+  }
+}
+{% endschema %}

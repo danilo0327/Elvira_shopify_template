@@ -1,0 +1,103 @@
+<section id="collections" class="yancy-collections">
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'collection' -%}
+      {%- liquid
+        assign col = block.settings.collection
+        assign eyebrow = block.settings.eyebrow
+        assign title = block.settings.title
+        assign link_text = block.settings.link_text
+
+        if col != blank
+          if title == blank
+            assign title = col.title
+          endif
+          assign card_link = col.url
+          assign card_image = block.settings.image | default: col.featured_image
+        else
+          assign card_link = block.settings.link
+          assign card_image = block.settings.image
+        endif
+      -%}
+
+      <a class="yancy-collection-card" href="{{ card_link | default: '#' }}" {{ block.shopify_attributes }}>
+        {%- if card_image != blank -%}
+          <img
+            src="{{ card_image | image_url: width: 1200 }}"
+            alt="{{ card_image.alt | default: title | escape }}"
+            loading="lazy"
+            width="{{ card_image.width | default: 1200 }}"
+            height="{{ card_image.height | default: 1500 }}"
+          >
+        {%- endif -%}
+        <div class="yancy-card-copy">
+          {%- if eyebrow != blank -%}
+            <div class="yancy-eyebrow">{{ eyebrow }}</div>
+          {%- endif -%}
+          <h3>{{ title }}</h3>
+          {%- if link_text != blank -%}
+            <span>{{ link_text }}</span>
+          {%- endif -%}
+        </div>
+      </a>
+    {%- endif -%}
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "Yancy: Collections grid",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow text"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title override",
+          "info": "Leave blank to use the collection's title"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Explore"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image override",
+          "info": "Leave blank to use the collection's image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link override",
+          "info": "Only used if no collection is selected"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yancy: Collections grid",
+      "blocks": [
+        { "type": "collection", "settings": { "eyebrow": "Collection", "title": "Bags", "link_text": "Explore" } },
+        { "type": "collection", "settings": { "eyebrow": "Home", "title": "Rugs", "link_text": "View pieces" } },
+        { "type": "collection", "settings": { "eyebrow": "Accessories", "title": "Wear", "link_text": "Shop now" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

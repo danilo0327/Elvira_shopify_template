@@ -1,0 +1,75 @@
+<section class="yancy-newsletter">
+  <div class="yancy-newsletter-box">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="yancy-eyebrow">{{ section.settings.eyebrow }}</div>
+    {%- endif -%}
+    <h2 class="yancy-grid-title">{{ section.settings.heading }}</h2>
+
+    {%- form 'customer', id: 'YancyNewsletterForm-' | append: section.id -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+
+      {%- if form.posted_successfully? -%}
+        <p class="yancy-newsletter-success">{{ section.settings.success_text | default: '¡Gracias por suscribirte!' }}</p>
+      {%- else -%}
+        <input
+          type="email"
+          name="contact[email]"
+          placeholder="{{ section.settings.placeholder | default: 'E-mail' }}"
+          aria-label="Email"
+          autocorrect="off"
+          autocapitalize="off"
+          value="{{ form.email }}"
+          required
+        >
+        <button type="submit">{{ section.settings.button_label | default: 'Subscribe' }}</button>
+
+        {%- if form.errors -%}
+          <p class="yancy-newsletter-success">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Yancy: Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Be part of our story"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sign up for new collections"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Input placeholder",
+      "default": "E-mail"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "success_text",
+      "label": "Success message",
+      "default": "¡Gracias por suscribirte!"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yancy: Newsletter"
+    }
+  ]
+}
+{% endschema %}

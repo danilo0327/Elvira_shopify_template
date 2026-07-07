@@ -1,0 +1,37 @@
+{% liquid
+  assign text = section.settings.text
+  assign link = section.settings.link
+%}
+
+{%- if link != blank -%}
+  <a class="yancy-announcement" href="{{ link }}">{{ text }}</a>
+{%- else -%}
+  <div class="yancy-announcement">{{ text }}</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Yancy: Announcement bar",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Nueva colección disponible · Envíos internacionales"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link (optional)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yancy: Announcement bar"
+    }
+  ]
+}
+{% endschema %}

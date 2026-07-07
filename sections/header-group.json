@@ -1,62 +1,43 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
-  "name": "t:sections.header.name",
+  "name": "Yancy header",
   "type": "header",
   "sections": {
-    "announcement-bar": {
-      "type": "announcement-bar",
-      "blocks": {
-        "announcement-bar-0": {
-          "type": "announcement",
-          "settings": {
-            "text": "Welcome to our store",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "announcement-bar-0"
-      ],
+    "yancy-announcement-bar": {
+      "type": "yancy-announcement-bar",
       "settings": {
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "color_scheme": "scheme-1",
-        "show_line_separator": true,
-        "show_social": false,
-        "enable_country_selector": false,
-        "enable_language_selector": false
+        "text": "Nueva colección disponible · Envíos internacionales",
+        "link": ""
       }
     },
-    "header": {
-      "type": "header",
+    "yancy-header": {
+      "type": "yancy-header",
+      "blocks": {
+        "link-home": {
+          "type": "link",
+          "settings": { "label": "Home", "link": "/" }
+        },
+        "link-collection": {
+          "type": "link",
+          "settings": { "label": "Collection", "link": "shopify://collections/all" }
+        },
+        "link-story": {
+          "type": "link",
+          "settings": { "label": "Our Story", "link": "shopify://pages/our-story" }
+        },
+        "link-shop": {
+          "type": "link",
+          "settings": { "label": "Shop", "link": "shopify://collections/all" }
+        }
+      },
+      "block_order": ["link-home", "link-collection", "link-story", "link-shop"],
       "settings": {
-        "logo_position": "middle-left",
-        "mobile_logo_position": "center",
-        "menu": "main-menu",
-        "menu_type_desktop": "dropdown",
-        "sticky_header_type": "on-scroll-up",
-        "show_line_separator": true,
-        "color_scheme": "scheme-1",
-        "menu_color_scheme": "scheme-1",
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "enable_customer_avatar": true,
-        "margin_bottom": 0,
-        "padding_top": 20,
-        "padding_bottom": 20
+        "logo_text": "YANCY",
+        "mobile_menu_label": "Menu",
+        "search_label": "Search",
+        "account_label": "Account",
+        "cart_label": "Cart"
       }
     }
   },
-  "order": [
-    "announcement-bar",
-    "header"
-  ]
+  "order": ["yancy-announcement-bar", "yancy-header"]
 }

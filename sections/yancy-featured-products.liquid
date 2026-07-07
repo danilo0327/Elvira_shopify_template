@@ -1,0 +1,76 @@
+{%- liquid
+  assign col = section.settings.collection
+  assign limit = section.settings.products_to_show
+-%}
+
+<section id="shop" class="yancy-section">
+  {%- if section.settings.eyebrow != blank -%}
+    <div class="yancy-eyebrow">{{ section.settings.eyebrow }}</div>
+  {%- endif -%}
+  <h2 class="yancy-grid-title">{{ section.settings.heading }}</h2>
+
+  <div class="yancy-product-grid">
+    {%- if col != blank -%}
+      {%- for product in col.products limit: limit -%}
+        <a class="yancy-product" href="{{ product.url }}">
+          {%- if product.featured_image != blank -%}
+            <img
+              src="{{ product.featured_image | image_url: width: 900 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              loading="lazy"
+              width="{{ product.featured_image.width | default: 900 }}"
+              height="{{ product.featured_image.height | default: 1125 }}"
+            >
+          {%- endif -%}
+          <div class="yancy-product-info">
+            <span>{{ product.title }}</span>
+            <span>{{ product.price | money }}</span>
+          </div>
+        </a>
+      {%- else -%}
+        <p>{{ 'La colección seleccionada no tiene productos.' }}</p>
+      {%- endfor -%}
+    {%- else -%}
+      <p>{{ 'Selecciona una colección en la configuración de esta sección.' }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Yancy: Featured products",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Selected pieces"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "New in"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Yancy: Featured products"
+    }
+  ]
+}
+{% endschema %}
